@@ -1,4 +1,4 @@
-const jwt = require("jsonWebtoken");
+const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
   console.log("You are in auth route Zone")
