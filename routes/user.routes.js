@@ -9,10 +9,10 @@ const userRouter = express.Router();
 
 userRouter.post("/register", async (req, res) => {
   console.log(req.body);
-  const { email, password, location, age } = req.body;
+  const { email, pass, location, age } = req.body;
   try {
-    bcrypt.hash(password, 5, async (err, hash) => {
-      const user = new UserModel({ email, password: hash, location, age });
+    bcrypt.hash(pass, 5, async (err, hash) => {
+      const user = new UserModel({ email, pass: hash, location, age });
       await user.save();
       res.status(200).send({ msg: "registration has been done!" });
     });
@@ -23,13 +23,13 @@ userRouter.post("/register", async (req, res) => {
 
 //login (authentication)
 userRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, pass } = req.body;
 
   try {
     const user = await UserModel.findOne({ email });
     console.log(user);
     if (user) {
-      bcrypt.compare(password, user.password, (err, result) => {
+      bcrypt.compare(pass, user.pass, (err, result) => {
         if (result) {
           res.status(200).send({
             msg: "login successful",
